@@ -98,4 +98,35 @@ public class ZigZagTraversal {
 			System.out.println();
 		}
 	}
+	public static List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+		List<List<Integer>> l = new LinkedList<List<Integer>>();
+		if (root == null)
+			return l;
+		Stack<TreeNode> s = new Stack<TreeNode>();
+		s.push(root);
+		boolean flag = true;
+		while(!s.isEmpty()) {
+			List<Integer> tmp = new LinkedList<Integer>();
+			Stack<TreeNode> s_tmp = new Stack<TreeNode>();
+			while(!s.isEmpty()) {
+				TreeNode t = s.pop();
+				tmp.add(t.val);
+				if (flag){
+					if(t.left!=null)
+						s_tmp.push(t.left);
+					if(t.right!=null)
+						s_tmp.push(t.right);
+				} else {
+					if(t.right!=null)
+						s_tmp.push(t.right);
+					if(t.left!=null)
+						s_tmp.push(t.left);
+				}
+			}
+			flag = !flag;
+			s = s_tmp;
+			l.add(tmp);
+		}
+		return l;
+	}
 }
